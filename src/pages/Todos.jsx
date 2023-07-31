@@ -3,114 +3,69 @@ import { useNavigate } from "react-router-dom";
 import { createTodo, deleteTodo, getTodos, updateTodo } from "../service/todo";
 import TodoCard from "./TodoCard";
 import Alert from "../components/Alert";
+import AddTodo from "./AddTodo";
 
 export default function Todos() {
   const [todos, setTodos] = useState([]);
-  const [todo, setTodo] = useState("");
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
   const token = localStorage.getItem("access_token");
 
+  const setErrorMsg = (err) => {
+    setError(err);
+    setTimeout(() => {
+      setError("");
+    }, 5000);
+  };
+
+  const getTodoList = () => {
+    getTodos(token)
+      .then((response) => {
+        setTodos(response.data);
+      })
+      .catch(setErrorMsg);
+  };
+
   useEffect(() => {
     if (!token) {
       navigate("/signin");
     } else {
-      getTodos(token)
-        .then((response) => {
-          setTodos(response.data);
-        })
-        .catch((error) => {
-          setError(error);
-          setTimeout(() => {
-            setError("");
-          }, 5000);
-        });
+      getTodoList();
     }
-  }, []);
+    // eslint-disable-next-line
+  }, [token]);
 
-  const handleChange = (e) => {
-    const { value } = e.target;
-    setTodo(value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onCreate = (todo) => {
     createTodo(token, todo)
       .then((response) => {
-        setTodos((prev) => {
-          const newTodos = [...prev, response.data];
-          return newTodos;
-        });
+        setTodos((prev) => [...prev, response.data]);
       })
-      .catch((error) => {
-        setError(error);
-        setTimeout(() => {
-          setError("");
-        }, 5000);
-      });
+      .catch(setErrorMsg);
   };
 
   const onUpdate = (todoItem) => {
     updateTodo(token, todoItem)
       .then(() => {
-        getTodos(token)
-          .then((response) => {
-            setTodos(response.data);
-          })
-          .catch((error) => {
-            setError(error);
-            setTimeout(() => {
-              setError("");
-            }, 5000);
-          });
+        getTodoList();
       })
-      .catch((error) => {
-        console.log(error);
-        setError(error);
-        setTimeout(() => {
-          setError("");
-        }, 5000);
-      });
+      .catch(setErrorMsg);
   };
 
   const onDelete = (id) => {
     deleteTodo(token, id)
       .then(() => {
-        getTodos(token)
-          .then((response) => {
-            setTodos(response.data);
-          })
-          .catch((error) => {
-            setError(error);
-            setTimeout(() => {
-              setError("");
-            }, 5000);
-          });
+        getTodoList();
       })
-      .catch((error) => {
-        setError(error);
-        setTimeout(() => {
-          setError("");
-        }, 5000);
-      });
+      .catch(setErrorMsg);
   };
 
   return (
     <div>
-      <form>
-        <input
-          data-testid="new-todo-input"
-          type="text"
-          onChange={handleChange}
-        />
-        <button data-testid="new-todo-add-button" onClick={handleSubmit}>
-          추가
-        </button>
-      </form>
+      <AddTodo onCreate={onCreate} />
       {error && <Alert msg={error}></Alert>}
       <ul>
-        {todos.length > 1 &&
+        {todos &&
           todos.map((item) => {
             return (
               <TodoCard

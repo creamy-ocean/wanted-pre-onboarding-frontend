@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
-    <header>
+    <header className="">
       <Link to="signup">
-        <button>회원가입</button>
+        <button className="rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+          회원가입
+        </button>
       </Link>
       <Link to="signin">
         <button>로그인</button>

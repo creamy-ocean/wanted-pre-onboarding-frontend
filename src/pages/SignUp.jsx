@@ -16,6 +16,7 @@ export default function SignUp() {
     if (localStorage.getItem("access_token")) {
       navigate("/todo");
     }
+    // eslint-disable-next-line
   }, []);
 
   const handleEmail = (e) => {
