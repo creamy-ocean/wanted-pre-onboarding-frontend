@@ -5,9 +5,11 @@ import Header from "../components/Header";
 
 export default function Root() {
   return (
-    <div className="h-full">
+    <div>
       <Header />
-      <Outlet />
+      <div className="flexbox">
+        <Outlet />
+      </div>
     </div>
   );
 }

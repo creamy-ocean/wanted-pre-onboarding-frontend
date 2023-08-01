@@ -57,29 +57,42 @@ export default function SignIn() {
   };
 
   return (
-    <div>
-      <form>
-        <input
-          data-testid="email-input"
-          type="email"
-          required
-          onChange={handleEmail}
-        />
-        <input
-          data-testid="password-input"
-          type="password"
-          required
-          onChange={handlePassword}
-        />
-        <button
-          disabled={!(isEmailValid && isPasswordValid)}
-          data-testid="signin-button"
-          onClick={onSubmit}
-        >
-          로그인
-        </button>
+    <form>
+      <div className="flex flex-col">
+        <div className="flex justify-between items-center">
+          <label htmlFor="email">이메일</label>
+          <input
+            data-testid="email-input"
+            type="email"
+            id="email"
+            required
+            onChange={handleEmail}
+            className="input"
+          />
+        </div>
+        <div className="flex justify-between items-center mt-2">
+          <label htmlFor="password">비밀번호</label>
+          <input
+            data-testid="password-input"
+            type="password"
+            id="password"
+            required
+            onChange={handlePassword}
+            className="input"
+          />
+        </div>
+        <div className="flexbox">
+          <button
+            disabled={!(isEmailValid && isPasswordValid)}
+            data-testid="signin-button"
+            onClick={onSubmit}
+            className="btn mt-4"
+          >
+            로그인
+          </button>
+        </div>
         {error && <Alert msg={error}></Alert>}
-      </form>
-    </div>
+      </div>
+    </form>
   );
 }

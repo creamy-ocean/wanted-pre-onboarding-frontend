@@ -53,29 +53,40 @@ export default function SignUp() {
   };
 
   return (
-    <div>
-      <form>
+    <form>
+      <div className="flex justify-between items-center">
+        <label htmlFor="email">이메일</label>
         <input
           data-testid="email-input"
           type="email"
+          id="email"
           required
           onChange={handleEmail}
+          className="input"
         />
+      </div>
+      <div className="flex justify-between items-center mt-2">
+        <label htmlFor="password">비밀번호</label>
         <input
           data-testid="password-input"
           type="password"
+          id="password"
           required
           onChange={handlePassword}
+          className="input"
         />
+      </div>
+      <div className="flexbox">
         <button
           disabled={!(isEmailValid && isPasswordValid)}
           data-testid="signup-button"
           onClick={onSubmit}
+          className="btn mt-4"
         >
           회원가입
         </button>
-        {error && <Alert msg={error}></Alert>}
-      </form>
-    </div>
+      </div>
+      {error && <Alert msg={error}></Alert>}
+    </form>
   );
 }

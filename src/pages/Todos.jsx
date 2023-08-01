@@ -21,9 +21,7 @@ export default function Todos() {
 
   const getTodoList = () => {
     getTodos(token)
-      .then((response) => {
-        setTodos(response.data);
-      })
+      .then((response) => setTodos(response.data))
       .catch(setErrorMsg);
   };
 
@@ -38,9 +36,7 @@ export default function Todos() {
 
   const onCreate = (todo) => {
     createTodo(token, todo)
-      .then((response) => {
-        setTodos((prev) => [...prev, response.data]);
-      })
+      .then((response) => setTodos((prev) => [...prev, response.data]))
       .catch(setErrorMsg);
   };
 
@@ -64,7 +60,7 @@ export default function Todos() {
     <div>
       <AddTodo onCreate={onCreate} />
       {error && <Alert msg={error}></Alert>}
-      <ul>
+      <ul className="mt-4">
         {todos &&
           todos.map((item) => {
             return (

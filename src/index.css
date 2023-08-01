@@ -1,6 +1,6 @@
-@tailwind "tailwindcss/base";
-@tailwind "tailwindcss/components";
-@tailwind "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   margin: 0;
@@ -14,4 +14,16 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.btn {
+  @apply rounded-md bg-gray-100 px-2 py-1 text-sm text-gray-600 ring-1 ring-inset ring-gray-500/10 disabled:text-gray-300;
+}
+
+.input {
+  @apply rounded-md border-0 px-2 py-1 ml-2 text-sm text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6;
+}
+
+.flexbox {
+  @apply flex justify-center items-center;
 }
